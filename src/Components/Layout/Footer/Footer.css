@@ -1,0 +1,12 @@
+.footer {
+    height: 60px;
+    position: fixed;
+    background-color: #333943;
+    padding: 16px 15px;
+    width: 100%;
+    bottom: 0;
+
+    & .footer-caption {
+        color: #71e2e9;
+    }
+}

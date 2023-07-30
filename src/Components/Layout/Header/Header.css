@@ -1,0 +1,102 @@
+.header {
+    background-color: #333943;
+    display: flex;
+
+    & .logo {
+
+        & img {
+            width: 80px;
+        }
+    }
+     
+    & nav {
+
+        & ul {
+            margin-bottom: 0px;
+
+            & li {
+                position: relative;
+                padding: 20px 5px;
+
+                & a, & span {
+                    color: #71e2e9;
+                    cursor: pointer;
+                }
+
+                & ul.second-ul {
+                    width: 180px;
+                    font-size: 18px;
+                    position: absolute;
+                    padding-left: 0px;
+                    top: 60px;
+                    left: 0px;
+                    z-index: 1000;
+                    text-align: left;
+                    background-color: #4D606E;
+                    box-shadow: 5px 5px 15px #4D606E;
+                    display: none;
+                    padding-bottom: 5px;
+                    
+                    & li.second-list {
+                        padding: 3px 20px;
+
+                        &:hover {
+
+                            & a.second-anchor {
+                                color: #f1f1f1;
+                                text-decoration: none;
+                                transition: 0.2s;
+                            }
+                        }
+                    }
+                }
+
+                &:hover {
+
+                    & a.first-anchor, .first-anchor {
+                        color: #f1f1f1;
+                        text-decoration: none;
+                        transition: 0.2s;
+                    }
+
+                    & ul {
+                        display: block;
+                    }
+                }
+
+                & .active {
+                    color: #f1f1f1;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+
+    & .right-side {
+        position: absolute;
+        right: 15px;
+        top: 20px;
+
+        & a {
+            color: #71e2e9;
+            text-decoration: none;
+
+            &:hover {
+                color: #f1f1f1;
+                transform: 0.2s;
+            }
+        }
+    }
+
+}
+
+.list {
+    display: flex;
+    gap: 1rem;
+}
+
+.list a {
+    text-decoration: none;
+    color: var(--color-primary-400);
+}
+    

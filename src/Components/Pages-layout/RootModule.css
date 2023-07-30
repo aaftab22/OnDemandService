@@ -1,0 +1,10 @@
+.content, main {
+    margin: 2rem auto;
+    text-align: center;
+}
+.element-visible {
+    display: block;
+}
+.element-non-visible {
+    display: none;
+}
