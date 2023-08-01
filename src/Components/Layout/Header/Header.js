@@ -18,11 +18,22 @@ const Header = () => {
                     <li>
                         <span className='first-anchor' to="/admin">Book a Service</span>
                         <ul className='second-ul'>
-                            <li className='second-list'><a className='second-anchor' href="#">Electrician</a></li>
-                            <li className='second-list'><a className='second-anchor' href="#">Plumbing</a></li>
-                            <li className='second-list'><a className='second-anchor' href="#">Cleaning</a></li>
-                            <li className='second-list'><a className='second-anchor' href="#">Baby Sitting</a></li>
-                            <li className='second-list'><a className='second-anchor' href="#">Painter</a></li>
+                            <li className='second-list'>
+                                <NavLink className={'second-anchor'} to="/customer/book-service/electrician">Electrician</NavLink>    
+                            </li>
+                            <li className='second-list'>
+                                {/* <a className='second-anchor' href="#">Plumbing</a> */}
+                                <NavLink className={'second-anchor'} to="/customer/book-service/plumbing">Plumbing</NavLink>
+                            </li>
+                            <li className='second-list'>
+                                <NavLink className={'second-anchor'} to="/customer/book-service/cleaning">Cleaning</NavLink>
+                            </li>
+                            <li className='second-list'>
+                                <NavLink className={'second-anchor'} to="/customer/book-service/baby-sitting">Baby-Sitting</NavLink>
+                            </li>
+                            <li className='second-list'>
+                                <NavLink className={'second-anchor'} to="/customer/book-service/painter">Painter</NavLink>
+                            </li>
                         </ul>
                     </li>
                 </ul>

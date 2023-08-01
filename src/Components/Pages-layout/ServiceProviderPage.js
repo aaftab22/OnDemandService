@@ -1,12 +1,12 @@
-import react, { useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import {  useNavigate } from "react-router-dom";
 import "./ServiceProviderPage.css";
 
-//added
-import { getDatabase, ref, set } from 'firebase/database';
-import { auth, database } from '../../firebase';
+//imported by A
 import {  createUserWithEmailAndPassword  } from 'firebase/auth';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth, database } from '../../firebase';
+import { getDatabase, ref, set } from 'firebase/database';
 
 const ServiceProviderPage = (props) => {
   const [isLogin, setIsLogin] = useState(true);
@@ -18,8 +18,9 @@ const ServiceProviderPage = (props) => {
   const [enteredLicense, setEnteredLicense] = useState("");
   const [enteredSkills, setEnteredSkills] = useState("");
   const [enteredPhone, setEnteredPhone] = useState("");
-  // const [EnteredDob, setEnteredDob] = useState("");
-
+  const [EnteredDob, setEnteredDob] = useState("");
+  const [error, setError] = useState('');
+  
   const [enteredLoginEmail, setEnteredLoginEmail] = useState("");
   const [enteredLoginPassword, setEnteredLoginPassword] = useState("");
 
@@ -37,98 +38,117 @@ const ServiceProviderPage = (props) => {
     setEnteredName(event.target.value);
   };
 
-  const emailChangeHandler = (event) => {
-    setEnteredEmail(event.target.value);
-  };
+const emailChangeHandler = (event) => {
+  setEnteredEmail(event.target.value);
+};
 
-  const passwordChangeHandler = (event) => {
-    setEnteredPassword(event.target.value);
-  };
+const passwordChangeHandler = (event) => {
+  setEnteredPassword(event.target.value);
+};
 
-  const sinChangeHandler = (event) => {
-    setEnteredSin(event.target.value);
+const sinChangeHandler = (event) => {
+  setEnteredSin(event.target.value);
+}
+
+const licenseChangeHandler = (event) => {
+  setEnteredLicense(event.target.value);
+}
+
+const skillsChangeHandler = (event) => {
+  setEnteredSkills(event.target.value);
+}
+
+const phoneChangeHandler = (event) => {
+  setEnteredPhone(event.target.value);
+};
+
+const dobChangeHandler = (event) => {
+  setEnteredDob(event.target.value);
+};
+  const onLoginEmailChangeHandler = (event) => {
+  setEnteredLoginEmail(event.target.value);
   }
+const onLoginPasswordChangeHandler = (event) => {
+  setEnteredLoginPassword(event.target.value);
+}
+  
+const submitRegisterHandler = async  (event) => {
+  event.preventDefault();
 
-  const licenseChangeHandler = (event) => {
-    setEnteredLicense(event.target.value);
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        enteredEmail,
+        enteredPassword
+      );
+
+      const user = userCredential.user;
+      const userId = user.uid;
+      console.log("sign up user id: " + userId);
+
+      // Save service provider data to the Realtime Database
+      const serviceProviderData = {
+        fullName: enteredName,
+        email: enteredEmail,
+        phone: enteredPhone,
+        sin: enteredSin,
+        license: enteredLicense,
+        skills: enteredSkills,
+        dob: EnteredDob, 
+      };
+
+      // const db = getDatabase();
+      const serviceProviderRef = ref(database, 'serviceProvider/' + userId);
+      set(serviceProviderRef, serviceProviderData);
+
+      // Empty fields after submitting
+      setEnteredName("");
+      setEnteredEmail("");
+      setEnteredPassword("");
+      setEnteredSin("");
+      setEnteredLicense("");
+      setEnteredSkills("");
+      setEnteredPhone("");
+      // setEnteredDob(""); // If you want to empty the date of birth field
+
+      navigate("/customer/dashboard");
+      setIsLogin(true);
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage); 
+    }
+};
+
+const submitLoginHandler = async(event) => {
+  event.preventDefault();
+  try 
+  {
+    const userCredential = await signInWithEmailAndPassword(auth, enteredLoginEmail, enteredLoginPassword);
+    setEnteredLoginEmail('');
+    setEnteredLoginPassword('');
+    navigate('/customer/dashboard');
+    const usersUID = userCredential.user.uid;
+    console.log("login user id " + usersUID);
+  } 
+  catch (error) 
+  {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+      setError('Invalid email or password. Please try again.');
   }
-
-  const skillsChangeHandler = (event) => {
-    setEnteredSkills(event.target.value);
-  }
-
-  const phoneChangeHandler = (event) => {
-    setEnteredPhone(event.target.value);
-  };
-
-  // const dobChangeHandler = (event) => {
-  //   setEnteredDob(event.target.value);
-  // };
-
-  const submitRegisterHandler = async  (event) => {
-    event.preventDefault();
+}
 
 
-      try {
-        const userCredential = await createUserWithEmailAndPassword(
-          auth,
-          enteredEmail,
-          enteredPassword
-        );
-  
-        const user = userCredential.user;
-        const userId = user.uid;
-        console.log("sign up user id: " + userId);
-  
-        // Save service provider data to the Realtime Database
-        const serviceProviderData = {
-          fullName: enteredName,
-          email: enteredEmail,
-          phone: enteredPhone,
-          sin: enteredSin,
-          license: enteredLicense,
-          skills: enteredSkills,
-          // dob: EnteredDob, //
-        };
-  
-        // const db = getDatabase();
-        const serviceProviderRef = ref(database, 'serviceProvider/' + userId);
-        set(serviceProviderRef, serviceProviderData);
-  
-        // Empty fields after submitting
-        setEnteredName("");
-        setEnteredEmail("");
-        setEnteredPassword("");
-        setEnteredSin("");
-        setEnteredLicense("");
-        setEnteredSkills("");
-        setEnteredPhone("");
-        // setEnteredDob(""); // If you want to empty the date of birth field
-
-        navigate("/customer/dashboard");
-        setIsLogin(true);
-      } catch (error) {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage); 
-      }
-
-  };
-
-  const submitLoginHandler = (event) => {
-    event.preventDefault();
-
-    setEnteredLoginEmail("");
-    setEnteredLoginPassword("");
-  };
-
-  const onResetHandler = () => {
+const onResetHandler = () => {
     setEnteredName("");
     setEnteredEmail("");
     setEnteredPassword("");
     setEnteredPhone("");
-    // setEnteredDob("");
-  };
+    setEnteredDob("");
+};
 
   return (
     <div className="service-provider-page">
@@ -235,14 +255,14 @@ const ServiceProviderPage = (props) => {
               </div>
 
               <div className="register__control">
-                {/* <label>Date Of Birth</label>
+                <label>Date Of Birth</label>
                 <input
                   type="date"
                   value={EnteredDob}
                   min="1950-01-01"
                   max="2015-12-31"
                   onChange={dobChangeHandler}
-                ></input> */}
+                ></input>
               </div>
 
             </div>
@@ -264,7 +284,7 @@ const ServiceProviderPage = (props) => {
                   type="email"
                   value={enteredLoginEmail}
                   name="email"
-                  onChange={emailChangeHandler}
+                  onChange={onLoginEmailChangeHandler}
                 ></input>
               </div>
 
@@ -274,7 +294,7 @@ const ServiceProviderPage = (props) => {
                   type="password"
                   value={enteredLoginPassword}
                   name="password"
-                  onChange={passwordChangeHandler}
+                  onChange={onLoginPasswordChangeHandler}
                 ></input>
               </div>
             </div>

@@ -1,0 +1,33 @@
+.book-electrician {
+
+    & .image-box  {
+        width: 100%;
+        position: relative;
+
+        & .overlay-class {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 1;
+
+            & .text-overlay {
+                padding-top: 5.5%;
+                font-size: 28px;
+                font-weight: 600;
+                color: #fff;
+            }
+        }
+        & img {
+            width: 100%;
+        }
+    }
+
+    & .electrician-table {
+        text-align: left;
+        margin: 20px;
+    }
+
+}

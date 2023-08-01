@@ -1,198 +1,155 @@
-import react, { useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Customer.css";
 
 //imported by A
 import {  createUserWithEmailAndPassword  } from 'firebase/auth';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-// import { auth } from '../../firebase';
-// import { ref, set } from 'firebase/database';
-import { auth, database } from '../../firebase';
+import { auth } from '../../firebase';
 import { getDatabase, ref, set } from 'firebase/database';
 
 const Customer = () => {
-  
-  const [isLogin, setIsLogin] = useState(true);
-  const [enteredName, setEnteredName] = useState('');
-  const [enteredEmail, setEnteredEmail] = useState('');
-  const [enteredPassword, setEnteredPassword] = useState('');
-  const [enteredPhone, setEnteredPhone] = useState('');
-  const [EnteredDob, setEnteredDob] = useState('');
-  const [enteredLoginEmail, setEnteredLoginEmail] = useState('');
-  const [enteredLoginPassword, setEnteredLoginPassword] = useState('');
-  const navigate = useNavigate();
-  const [error, setError] = useState('');
-  const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const [isLogin, setIsLogin] = useState(true);
+const [enteredName, setEnteredName] = useState('');
+const [enteredEmail, setEnteredEmail] = useState('');
+const [enteredPassword, setEnteredPassword] = useState('');
+const [enteredPhone, setEnteredPhone] = useState('');
+const [enteredLoginEmail, setEnteredLoginEmail] = useState('');
+const [enteredLoginPassword, setEnteredLoginPassword] = useState('');
+const navigate = useNavigate();
 
-  function registrationValidation(enteredName,enteredEmail, enteredPassword, enteredPhone)
+//added by a
+const [error, setError] = useState('');
+
+//validation while registration on client side
+function registrationValidation(enteredPhone)
   {
-    if (!enteredName && !enteredEmail && !enteredPassword && !enteredPhone) {
-      setError("Please fill in all required fields.");
-      return false;
-    }
-
-    // Email validation
-    if (!emailPattern.test(enteredEmail)) 
-    {
-      setError("Please enter a valid email address.");
-      return false;
-    }
-
     //phone number validation
     if (enteredPhone.length !== 10) {
       setError("Phone number should have 10 digits.");
       return false;
     }
     return true;
-  };
-
-  function loginValidation(enteredLoginEmail,enteredLoginPassword)
-  {
-      if(enteredLoginEmail)
-      {
-        if(emailPattern.test(enteredLoginEmail))
-        {
-            if(!enteredLoginPassword)
-            {
-              setError("Please enter password");
-              return false;
-            }      
-        }
-        else{
-          setError("Please enter a valid email address.");
-          return false;
-        }
-      }
-      else{
-        setError("Please enter email address.");
-        return false;
-      }
-      return true;
-  };
-
-  const onClickLoginButton = () => {
-    setIsLogin(true);
-   
-  };
-
-  const onClickRegisterButton = () => {
-    setIsLogin(false);
-    // const validationResult = registrationValidation(enteredName,enteredEmail,enteredPassword, enteredPhone); 
-    // if(!validationResult)
-    // {
-    //   setIsLogin(true);
-    // }
-  };
-
-  const nameChangeHandler = (event) => {
-    setEnteredName(event.target.value);
-  }
-  const emailChangeHandler = (event) => {
-    setEnteredEmail(event.target.value);
-  }
-  const onLoginEmailChangeHandler = (event) => {
-    setEnteredLoginEmail(event.target.value);
-  }
-  const passwordChangeHandler = (event) => {
-    setEnteredPassword(event.target.value);
-  }
-  const onLoginPasswordChangeHandler = (event) => {
-    setEnteredLoginPassword(event.target.value);
-  }
-  const phoneChangeHandler = (event) => {
-    setEnteredPhone(event.target.value);
-  }
-  const dobChangeHandler = (event) => {
-    setEnteredDob(event.target.value);
-  }
-const submitRegisterHandler = async (event) => {
-  event.preventDefault();
-  
-  const database = getDatabase();
-  const validationResult = registrationValidation(
-    enteredName,
-    enteredEmail,
-    enteredPassword,
-    enteredPhone
-  );
-
-  if (validationResult) {
-    try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        enteredEmail,
-        enteredPassword
-      );
-
-      const user = userCredential.user;
-      const userId = user.uid;
-      console.log("sign up user id: " + userId);
-
-      // Save user data to the Realtime Database
-      const userData = {
-        fullName: enteredName,
-        email: enteredEmail,
-        phone: enteredPhone,
-      };
-
-      // const dbRef = ref(database); 
-      // set(ref(dbRef, 'users/' + userId), userData);
-      const userRef = ref(database, 'users/' + userId);
-      set(userRef, userData);
-
-      console.log("userDate 137 = " + userData);
-      
-      navigate("/customer/dashboard");
-      setIsLogin(true);
-    } 
-    catch (error) {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode, errorMessage); 
-    }
-      // Empty fields after submitting
-      setEnteredName("");
-      setEnteredEmail("");
-      setEnteredPassword("");
-      setEnteredPhone("");
-      setEnteredDob("");
-  }
 };
 
-  const submitLoginHandler = async(event) => {
+
+//   //validation while login on client side 
+// function loginValidation(enteredLoginEmail,enteredLoginPassword)
+//   {
+//       if(enteredLoginEmail)
+//       {
+//         if(emailPattern.test(enteredLoginEmail))
+//         {
+//             if(!enteredLoginPassword)
+//             {
+//               setError("Please enter password");
+//               return false;
+//             }      
+//         }
+//         else{
+//           setError("Please enter a valid email address.");
+//           return false;
+//         }
+//       }
+//       else{
+//         setError("Please enter email address.");
+//         return false;
+//       }
+//       return true;
+// };
+
+
+const onClickLoginButton = () => {
+    setIsLogin(true);
+};
+
+const onClickRegisterButton = () => {
+    setIsLogin(false);
+};
+
+const nameChangeHandler = (event) => {
+    setEnteredName(event.target.value);
+}
+
+const emailChangeHandler = (event) => {
+    setEnteredEmail(event.target.value);
+}
+
+const passwordChangeHandler = (event) => {
+    setEnteredPassword(event.target.value);
+}
+
+const phoneChangeHandler = (event) => {
+    setEnteredPhone(event.target.value);
+}
+
+const submitRegisterHandler = async(event) => {
     event.preventDefault();
-    const validationResult = loginValidation(enteredLoginEmail,enteredLoginPassword); // edited 
-    
+    const database = getDatabase();
+    const validationResult = registrationValidation(enteredPhone);
+
     if (validationResult) {
-      try {
-        const userCredential = await signInWithEmailAndPassword(auth, enteredLoginEmail, enteredLoginPassword);
-        setEnteredLoginEmail('');
-        setEnteredLoginPassword('');
-        navigate('/customer/dashboard');
+      try 
+      {
+        const userCredential = await createUserWithEmailAndPassword(auth,enteredEmail,enteredPassword);
 
-        const user = userCredential.user.uid;
-        console.log("login user id " + user);
+        const Customer = userCredential.user;
+        const userId = Customer.uid;
+        console.log("sign up user id: " + userId);
+        // Save user data to the Realtime Database
+        const userData = {fullName: enteredName,email: enteredEmail,phone: enteredPhone};
+        const userRef = ref(database, 'Customer/' + userId);
+        set(userRef, userData);
+        navigate("/customer/dashboard");
+        setIsLogin(true);
+      } 
+      catch (error) {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage); 
+      }
+        // Empty fields after submitting
+        setEnteredName("");
+        setEnteredEmail("");
+        setEnteredPassword("");
+        setEnteredPhone("");
+    }
+}
+const onLoginEmailChangeHandler = (event) => {
+  setEnteredLoginEmail(event.target.value);
+}
+const onLoginPasswordChangeHandler = (event) => {
+  setEnteredLoginPassword(event.target.value);
+}
 
-      } catch (error) {
+const submitLoginHandler = async(event) => {
+    event.preventDefault();
+    try 
+    {
+      const userCredential = await signInWithEmailAndPassword(auth, enteredLoginEmail, enteredLoginPassword);
+      setEnteredLoginEmail('');
+      setEnteredLoginPassword('');
+      navigate('/customer/dashboard');
+      const usersUID = userCredential.user.uid;
+      console.log("login user id " + usersUID);
+    } 
+    catch (error) 
+    {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
         setError('Invalid email or password. Please try again.');
-      }
     }
+}
 
+const onResetHandler = () => {
+  setEnteredName('');
+  setEnteredEmail('');
+  setEnteredPassword('');
+  setEnteredPhone('');
+}
 
-  }
-
-  const onResetHandler = () => {
-    setEnteredName('');
-    setEnteredEmail('');
-    setEnteredPassword('');
-    setEnteredPhone('');
-    setEnteredDob('');
-  }
-
-  return (
+return (
     <div className="cust-page">
       <div className="left-side">
         <div className="box-container">
@@ -219,52 +176,54 @@ const submitRegisterHandler = async (event) => {
         <div className="logo-box">
           <img alt="logo" src={process.env.PUBLIC_URL + "/Images/logo.png"} />
         </div>
-
-        {/* registration form */}
         <div className={isLogin ? "display-none register-form" : "register-form"}>
           <form onSubmit={submitRegisterHandler}>
             <div className="register__controls">
               <div className="register__control">
-                <label>Full Name:</label>
+                <label>Full Name*</label>
                 <input
                   type="text"
                   name="name"
+                  required
                   value={enteredName}
                   onChange={nameChangeHandler}
                 ></input>
               </div>
 
               <div className="register__control">
-                <label>Email Address:</label>
+                <label>Email Address*</label>
                 <input
                   type="email"
                   value={enteredEmail}
                   name="email"
+                  required
                   onChange={emailChangeHandler}
                 ></input>
               </div>
 
               <div className="register__control">
-                <label>Password:</label>
+                <label>Password*</label>
                 <input
                   type="password"
                   value={enteredPassword}
                   name="password"
+                  required
                   onChange={passwordChangeHandler}
                 ></input>
               </div>
 
               <div className="register__control">
-                <label>Phone Number:</label>
+                <label>Phone Number*</label>
                 <input
-                  type="tel"
+                  type="number"
                   value={enteredPhone}
                   name="phone"
+                  required
                   onChange={phoneChangeHandler}
                 ></input>
               </div>
 
-              <div className="register__control">
+              {/* <div className="register__control">
                 <label>Date Of Birth</label>
                 <input
                   type="date"
@@ -273,7 +232,7 @@ const submitRegisterHandler = async (event) => {
                   max="2015-12-31"
                   onChange={dobChangeHandler}
                 ></input>
-              </div>
+              </div> */}
             </div>
             <div className="register__actions">
               <button type="submit">Register</button>
@@ -284,7 +243,6 @@ const submitRegisterHandler = async (event) => {
           </form>
         </div>
 
-        {/* login form */}
         <div className={!isLogin ? "display-none login-form" : "login-form"}>
           <form onSubmit={submitLoginHandler}>
             <div className="login__controls">
@@ -295,6 +253,7 @@ const submitRegisterHandler = async (event) => {
                   type="email"
                   value={enteredLoginEmail}
                   name="email"
+                  required
                   onChange={onLoginEmailChangeHandler}
                 ></input>
               </div>
@@ -305,6 +264,7 @@ const submitRegisterHandler = async (event) => {
                   type="password"
                   value={enteredLoginPassword}
                   name="password"
+                  required
                   onChange={onLoginPasswordChangeHandler}
                 ></input>
               </div>
@@ -318,7 +278,7 @@ const submitRegisterHandler = async (event) => {
             </div>
           </form>
         </div>
-          {error && <p>{error}</p>}
+        {error && <p>{error}</p>}
       </div>
     </div>
   );
