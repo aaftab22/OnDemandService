@@ -128,7 +128,7 @@ const submitLoginHandler = async(event) => {
     const userCredential = await signInWithEmailAndPassword(auth, enteredLoginEmail, enteredLoginPassword);
     setEnteredLoginEmail('');
     setEnteredLoginPassword('');
-    navigate('/customer/dashboard');
+    navigate('/service-provider/dashboard');
     const usersUID = userCredential.user.uid;
     console.log("login user id " + usersUID);
   } 

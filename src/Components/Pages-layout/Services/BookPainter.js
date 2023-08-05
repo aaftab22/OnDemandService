@@ -2,6 +2,7 @@ import Footer from '../../Layout/Footer/Footer';
 import Header from '../../Layout/Header/Header';
 import './BookPainter.css';
 import TableLayout from './TableLayout';
+import { data } from './Data';
 
 const BookPainter = () => {
     return (
@@ -21,7 +22,7 @@ const BookPainter = () => {
 
                     <div className='electrician-table'>
                         <h3>List of available Painters</h3>
-                        <TableLayout />
+                        <TableLayout data={data} />
                     </div>
                 </div>
             </main>

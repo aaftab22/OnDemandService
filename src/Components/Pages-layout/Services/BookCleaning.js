@@ -2,6 +2,7 @@ import Footer from '../../Layout/Footer/Footer';
 import Header from '../../Layout/Header/Header';
 import './BookCleaning.css';
 import TableLayout from './TableLayout';
+import {data} from './Data';
 
 const BookCleaning = () => {
     return (
@@ -21,7 +22,7 @@ const BookCleaning = () => {
 
                     <div className='electrician-table'>
                         <h3>List of available Cleaning Agents</h3>
-                        <TableLayout />
+                        <TableLayout data={data} />
                     </div>
                 </div>
             </main>

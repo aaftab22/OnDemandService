@@ -1,0 +1,36 @@
+.service-provider-dashboard {
+    padding: 20px;
+    color: #333943;
+
+    & .boxes {        
+        display: flex;
+        margin-top: 25px;
+
+        & .box {
+            flex: 1;
+            margin-right: 20px;
+            height: 100px;
+            box-shadow: 0px 5px 10px #cfcfcf;
+            background-color: #f1f1f1;
+            cursor: pointer;
+
+            & .box-title {
+                text-align: center;
+                font-size: 20px;
+                padding: 15px 15px 0px;
+            }
+            & .box__count {
+                font-size: 28px;
+                font-weight: 600;
+            }
+
+            &:hover {
+                box-shadow: none;
+                box-shadow: 0px 1px 5px #cfcfcf;
+            }
+            &:last-child {
+                margin-right: 0px;
+            }
+        }
+    }
+}
