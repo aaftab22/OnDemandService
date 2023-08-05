@@ -18,6 +18,7 @@ import BookBabySitting from './Components/Pages-layout/Services/BookBabySitting'
 import BookPainter from './Components/Pages-layout/Services/BookPainter';
 import 'font-awesome/css/font-awesome.min.css';
 import ServiceBooking from './Components/Pages-layout/Services/ServiceBooking';
+import SPDashboard from './Components/Pages-layout/SPDashboard';
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
       { path: '/customer/book-service/baby-sitting', element: <BookBabySitting /> },
       { path: '/customer/book-service/painter', element: <BookPainter /> },
       { path: '/customer/book-service/electrician/booking', element: <ServiceBooking /> },
+      { path: '/service-provider/dashboard', element: <SPDashboard /> },
     ],
     errorElement: <ErrorPage /> 
   }

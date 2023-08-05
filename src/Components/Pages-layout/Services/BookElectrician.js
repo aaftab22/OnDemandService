@@ -2,6 +2,7 @@ import Footer from '../../Layout/Footer/Footer';
 import Header from '../../Layout/Header/Header';
 import './BookElectrician.css';
 import TableLayout from './TableLayout';
+import { data } from './Data';
 
 const BookElectrician = () => {
     return (
@@ -21,7 +22,7 @@ const BookElectrician = () => {
 
                     <div className='electrician-table'>
                         <h3>List of available electricians</h3>
-                        <TableLayout />
+                        <TableLayout data={data}/>
                     </div>
                 </div>
             </main>
