@@ -33,32 +33,6 @@ function registrationValidation(enteredPhone)
 };
 
 
-//   //validation while login on client side 
-// function loginValidation(enteredLoginEmail,enteredLoginPassword)
-//   {
-//       if(enteredLoginEmail)
-//       {
-//         if(emailPattern.test(enteredLoginEmail))
-//         {
-//             if(!enteredLoginPassword)
-//             {
-//               setError("Please enter password");
-//               return false;
-//             }      
-//         }
-//         else{
-//           setError("Please enter a valid email address.");
-//           return false;
-//         }
-//       }
-//       else{
-//         setError("Please enter email address.");
-//         return false;
-//       }
-//       return true;
-// };
-
-
 const onClickLoginButton = () => {
     setIsLogin(true);
 };

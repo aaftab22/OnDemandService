@@ -6,10 +6,10 @@ const Header = () => {
 
     let string = window.location.href;
     let substring = "service-provider/dashboard";
-
     // console.log(string.includes(substring));
-
     let showServices = string.includes(substring);
+
+    
 
     return (
         <header className="header">

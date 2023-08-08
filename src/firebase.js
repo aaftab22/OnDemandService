@@ -29,4 +29,6 @@ export const auth = getAuth(app);
 
 export const database = getDatabase(app);
 
+// export {ref , set , push };
+
 export default app;

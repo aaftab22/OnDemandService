@@ -128,7 +128,7 @@ const submitLoginHandler = async(event) => {
     const userCredential = await signInWithEmailAndPassword(auth, enteredLoginEmail, enteredLoginPassword);
     setEnteredLoginEmail('');
     setEnteredLoginPassword('');
-    navigate('/service-provider/dashboard');
+    navigate('/`service-provider`/dashboard');
     const usersUID = userCredential.user.uid;
     console.log("login user id " + usersUID);
   } 
@@ -234,13 +234,13 @@ const onResetHandler = () => {
 
               <div className="register__control">
                 <label>Skills:</label>
-                <select value={enteredSkills} name="skills" onChange={skillsChangeHandler} >
+                <select required value={enteredSkills} name="skills" onChange={skillsChangeHandler} >
                     <option disabled>Select only one option</option>
-                    <option>Electrician</option>
-                    <option>Plumbing</option>
-                    <option>Cleaning</option>
-                    <option>Baby Sitting</option>
-                    <option>Painter</option>
+                    <option>electrician</option>
+                    <option>plumbing</option>
+                    <option>cleaning</option>
+                    <option>baby Sitting</option>
+                    <option>painter</option>
                 </select>
               </div>
               

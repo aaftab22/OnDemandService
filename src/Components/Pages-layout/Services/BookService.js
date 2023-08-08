@@ -3,14 +3,17 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import './BookService.css';
 
-function BookService() {
-  const [show, setShow] = useState(false);
+//added
+// import { database, ref, push, auth } from "../../../firebase";
+import { database, ref, push, auth, set } from "../../../firebase";
+function BookService({ serviceProviderId }) {
 
+  const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
   const [selectedDay, setSelectedDay] = useState("");
   const [selectedSlot, setSelectedSlot] = useState("");
+
   const dayChangeHandler = (event) => {
       setSelectedDay(event.target.value);
   };
@@ -21,8 +24,30 @@ function BookService() {
 
   const submitBookingHandler = async(event) => {
       event.preventDefault();
+      // try {
+      //   const user = auth.currentUser;
+      //   if (user) {
+      //     const userId = user.uid;
+    
+      //     const bookingData = {
+      //       serviceProviderId: serviceProviderId,
+      //       customerId: userId,
+      //       selectedDay: selectedDay,
+      //       selectedSlot: selectedSlot,
+      //       timestamp: Date.now(),
+      //     };
+    
+      //     const bookingRef = ref(database, "bookings");
+      //     const newBookingRef = push(bookingRef); 
+      //     await set(newBookingRef, bookingData);
 
-      console.log("You clicked on Book button");
+      //     console.log("Booking successful!");
+      //     setShow(false); // Close the modal after booking
+      //     console.log("sp id " + serviceProviderId + "user id " + userId);
+      //   }
+      // } catch (error) {
+      //   console.error("Error booking service:", error);
+      // }  
   }
   
   const handleBooking = (x) => {
