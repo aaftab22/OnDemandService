@@ -3,7 +3,8 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "@firebase/firestore"
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"; 
-import { getDatabase } from "firebase/database";
+// import { getDatabase } from "firebase/database";
+import { getDatabase, ref as dbRef, set as dbSet, push as dbPush } from "firebase/database";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -29,6 +30,8 @@ export const auth = getAuth(app);
 
 export const database = getDatabase(app);
 
-// export {ref , set , push };
+export const ref = dbRef;
+export const set = dbSet;
+export const push = dbPush;
 
 export default app;

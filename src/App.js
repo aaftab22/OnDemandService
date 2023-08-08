@@ -12,10 +12,10 @@ import ServiceProviderPage from './Components/Pages-layout/ServiceProviderPage';
 import Customer from './Components/Pages-layout/Customer';
 import CustomerDashboard from './Components/Pages-layout/CustomerDashboard';
 import BookElectrician from './Components/Pages-layout/Services/BookElectrician';
-import BookPlumbing from './Components/Pages-layout/Services/BookPlumbing';
-import BookCleaning from './Components/Pages-layout/Services/BookCleaning';
-import BookBabySitting from './Components/Pages-layout/Services/BookBabySitting';
-import BookPainter from './Components/Pages-layout/Services/BookPainter';
+// import BookPlumbing from './Components/Pages-layout/Services/BookPlumbing';
+// import BookCleaning from './Components/Pages-layout/Services/BookCleaning';
+// import BookBabySitting from './Components/Pages-layout/Services/BookBabySitting';
+// import BookPainter from './Components/Pages-layout/Services/BookPainter';
 import 'font-awesome/css/font-awesome.min.css';
 import ServiceBooking from './Components/Pages-layout/Services/ServiceBooking';
 import SPDashboard from './Components/Pages-layout/SPDashboard';
@@ -30,10 +30,10 @@ const router = createBrowserRouter([
       { path: '/customer', element: <Customer /> },
       { path: '/customer/dashboard', element: <CustomerDashboard /> },
       { path: '/customer/book-service/:serviceType', element: <BookElectrician /> },
-      { path: '/customer/book-service/:serviceType', element: <BookPlumbing /> },
-      { path: '/customer/book-service/:serviceType', element: <BookCleaning /> },
-      { path: '/customer/book-service/:serviceType', element: <BookBabySitting /> },
-      { path: '/customer/book-service/:serviceType', element: <BookPainter /> },
+      // { path: '/customer/book-service/:serviceType', element: <BookPlumbing /> },
+      // { path: '/customer/book-service/:serviceType', element: <BookCleaning /> },
+      // { path: '/customer/book-service/:serviceType', element: <BookBabySitting /> },
+      // { path: '/customer/book-service/:serviceType', element: <BookPainter /> },
       { path: '/customer/book-service/electrician/booking', element: <ServiceBooking /> },
       { path: '/service-provider/dashboard', element: <SPDashboard /> },
     ],

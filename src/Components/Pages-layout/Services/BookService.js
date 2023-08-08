@@ -4,7 +4,6 @@ import Modal from 'react-bootstrap/Modal';
 import './BookService.css';
 
 //added
-// import { database, ref, push, auth } from "../../../firebase";
 import { database, ref, push, auth, set } from "../../../firebase";
 function BookService({ serviceProviderId }) {
 
@@ -24,30 +23,30 @@ function BookService({ serviceProviderId }) {
 
   const submitBookingHandler = async(event) => {
       event.preventDefault();
-      // try {
-      //   const user = auth.currentUser;
-      //   if (user) {
-      //     const userId = user.uid;
+      try {
+        const user = auth.currentUser;
+        if (user) {
+          const userId = user.uid;
     
-      //     const bookingData = {
-      //       serviceProviderId: serviceProviderId,
-      //       customerId: userId,
-      //       selectedDay: selectedDay,
-      //       selectedSlot: selectedSlot,
-      //       timestamp: Date.now(),
-      //     };
+          const bookingData = {
+            serviceProviderId: serviceProviderId,
+            customerId: userId,
+            selectedDay: selectedDay,
+            selectedSlot: selectedSlot,
+            timestamp: Date.now(),
+          };
     
-      //     const bookingRef = ref(database, "bookings");
-      //     const newBookingRef = push(bookingRef); 
-      //     await set(newBookingRef, bookingData);
+          const bookingRef = ref(database, "bookings");
+          const newBookingRef = push(bookingRef); 
+          await set(newBookingRef, bookingData);
 
-      //     console.log("Booking successful!");
-      //     setShow(false); // Close the modal after booking
-      //     console.log("sp id " + serviceProviderId + "user id " + userId);
-      //   }
-      // } catch (error) {
-      //   console.error("Error booking service:", error);
-      // }  
+          console.log("Booking successful!");
+          setShow(false); // Close the modal after booking
+          console.log("sp id " + serviceProviderId + "user id " + userId);
+        }
+      } catch (error) {
+        console.error("Error booking service:", error);
+      }  
   }
   
   const handleBooking = (x) => {
@@ -82,8 +81,8 @@ function BookService({ serviceProviderId }) {
 
                   <div className="booking__control">
                       <label>Select Day:</label>
-                      <select value={selectedDay} name="selectedDay" onChange={dayChangeHandler} >
-                          <option disabled>Select suitable day</option>
+                      <select required value={selectedDay} name="selectedDay" onChange={dayChangeHandler} >
+                          <option >Select suitable day</option>
                           <option>Monday</option>
                           <option>Tuesday</option>
                           <option>Wednesday</option>
@@ -98,8 +97,8 @@ function BookService({ serviceProviderId }) {
 
                   <div className="booking__control">
                       <label>Select time slot</label>
-                      <select value={selectedSlot} name="selectedSlot"  onChange={slotChangeHandler} >
-                          <option disabled>Select suitable time slot</option>
+                      <select required value={selectedSlot} name="selectedSlot"  onChange={slotChangeHandler} >
+                          <option >Select suitable time slot</option>
                           <option>Morning (9am - 1pm)</option>
                           <option>Afternoon (1pm - 5pm)</option>
                           <option>Evenings (5pm - 9pm)</option>
