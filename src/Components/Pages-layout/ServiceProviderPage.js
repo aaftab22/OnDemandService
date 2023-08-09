@@ -18,7 +18,7 @@ const ServiceProviderPage = (props) => {
   const [enteredLicense, setEnteredLicense] = useState("");
   const [enteredSkills, setEnteredSkills] = useState("");
   const [enteredPhone, setEnteredPhone] = useState("");
-  const [EnteredDob, setEnteredDob] = useState("");
+  // const [EnteredDob, setEnteredDob] = useState("");
   const [error, setError] = useState('');
   
   const [enteredLoginEmail, setEnteredLoginEmail] = useState("");
@@ -62,9 +62,9 @@ const phoneChangeHandler = (event) => {
   setEnteredPhone(event.target.value);
 };
 
-const dobChangeHandler = (event) => {
-  setEnteredDob(event.target.value);
-};
+// const dobChangeHandler = (event) => {
+//   setEnteredDob(event.target.value);
+// };
   const onLoginEmailChangeHandler = (event) => {
   setEnteredLoginEmail(event.target.value);
   }
@@ -94,7 +94,7 @@ const submitRegisterHandler = async  (event) => {
         sin: enteredSin,
         license: enteredLicense,
         skills: enteredSkills,
-        dob: EnteredDob, 
+      
       };
 
       // const db = getDatabase();
@@ -148,7 +148,7 @@ const onResetHandler = () => {
     setEnteredEmail("");
     setEnteredPassword("");
     setEnteredPhone("");
-    setEnteredDob("");
+    
 };
 
   return (
@@ -255,7 +255,7 @@ const onResetHandler = () => {
                 ></input>
               </div>
 
-              <div className="register__control">
+              {/* <div className="register__control">
                 <label>Date Of Birth</label>
                 <input
                   type="date"
@@ -264,7 +264,7 @@ const onResetHandler = () => {
                   max="2015-12-31"
                   onChange={dobChangeHandler}
                 ></input>
-              </div>
+              </div> */}
 
             </div>
             <div className="register__actions">

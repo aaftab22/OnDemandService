@@ -2,17 +2,19 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import './NewAddress.css';
+  //added
+  import { database, ref, push, auth } from "../../../../firebase"; 
 
 function NewAddress() {
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const [selectedDay, setSelectedDay] = useState("");
-  const [selectedSlot, setSelectedSlot] = useState("");
+
 
   // FOR THE FORM
   const [enteredName, setEnteredName] = useState("");
+  const [enteredPhone, setEnteredPhone] = useState("");
   const [enteredStreet, setEnteredStreet] = useState("");
   const [enteredCity, setEnteredCity] = useState("");
   const [enteredProvince, setEnteredProvince] = useState("");
@@ -20,6 +22,9 @@ function NewAddress() {
 
   const nameChangeHandler = (event) => {
     setEnteredName(event.target.value);
+  };
+  const phoneChangeHandler = (event) => {
+    setEnteredPhone(event.target.value);
   };
   const streetChangeHandler = (event) => {
     setEnteredStreet(event.target.value);
@@ -36,6 +41,32 @@ function NewAddress() {
 
   const submitBookingHandler = async(event) => {
       event.preventDefault();
+      try {
+          const user = auth.currentUser;
+          if (user) {
+            const userId = user.uid;
+    
+            const addressData = {
+              name: enteredName,
+              phone: enteredPhone,
+              street: enteredStreet,
+              city: enteredCity,
+              province: enteredProvince,
+              postalCode: enteredPostalCode,
+            };
+    
+            // Reference to the "addresses" node under user's ID
+            const addressRef = ref(database, `addresses/${userId}`);
+            
+            // Push the new address data under the "addresses" node
+            await push(addressRef, addressData);
+    
+            console.log("Address saved!" + addressData);
+            setShow(false);
+          }
+        } catch (error) {
+          console.error("Error saving address:", error);
+        }  
   }
   
   const handleSaveAddress = (x) => {
@@ -44,8 +75,6 @@ function NewAddress() {
   };
 
   const onResetHandler = () => {
-    setSelectedDay("");
-    setSelectedSlot("");
     setShow(false);
     };
 
@@ -78,32 +107,45 @@ function NewAddress() {
                     onChange={nameChangeHandler}
                     ></input>
                 </div>
+                <br />
+                <div className="booking__control">
+                    <label>Phone :</label>
+                    <input
+                    type="tel"
+                    name="phone"
+                    value={enteredPhone}
+                    placeholder="Enter Number"
+                    onChange={phoneChangeHandler}
+                    />
+                </div>
 
                 <br />
 
-                  <div className="booking__control">
-                      <label>Street Number:</label>
-                      <input 
-                            type="text" 
-                            id="street" 
-                            name="street" 
-                            value={enteredStreet} 
-                            placeholder="Enter your Street Name"
-                            onChange={streetChangeHandler} required />
-                  </div>
+                <div className="booking__control">
+                    <label>Street Number:</label>
+                    <input 
+                      type="text" 
+                      id="street" 
+                      name="street" 
+                      value={enteredStreet} 
+                      placeholder="Enter your Street Name"
+                      onChange={streetChangeHandler} required 
+                    />
+                </div>
 
                   <br />
 
-                  <div className="booking__control">
-                      <label>City:</label>
-                      <input 
-                            type="text" 
-                            id="city" 
-                            name="city" 
-                            value={enteredCity} 
-                            placeholder="Enter your City Name"
-                            onChange={cityChangeHandler} required />
-                  </div>
+                <div className="booking__control">
+                <label>City:</label>
+                  <input 
+                    type="text" 
+                    id="city" 
+                    name="city" 
+                    value={enteredCity} 
+                    placeholder="Enter your City Name"
+                    onChange={cityChangeHandler} required 
+                  />
+                </div>
 
                   <br />
 

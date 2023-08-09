@@ -2,7 +2,7 @@ import { Link, NavLink } from 'react-router-dom';
 import classes from './Header.css';
 
 const Header = () => {
-    console.log(window.location.href);
+    // console.log(window.location.href);
 
     let string = window.location.href;
     let substring = "service-provider/dashboard";

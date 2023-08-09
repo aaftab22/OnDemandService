@@ -2,42 +2,60 @@ import { useEffect, useState } from "react";
 import BookService from './BookService';
 import './ServiceListing.css';
 import ReviewPage from "./ReviewPage";
+import { get, ref } from "firebase/database"; 
+
+
+//added
+import { auth, database } from "../../../firebase";
 
 const ServiceListing = () => {
-      
+    
+    const [services, setServices] = useState([]);
     // const keys = data[0] && Object.keys(data[0]);
-    const keys = ["name", "email", "phone", "skills", "dueDate"];
+    const keys = ["providerName", "selectedDay", "selectedSlot", "skills"];
 
-    let titles = ["Name of the Person", "Email Address", "Phone Number", "Skills", "Date"];
+    const titles = ["Name of the Person", "Day", "Time Slot", "Skills"];
 
-    let string = window.location.href;
-    let substring = "/customer/past-services";
+    const string = window.location.href;
+    const substring = "/customer/past-services";
     console.log(string.includes(substring));
-    let showServices = string.includes(substring);
+    const showServices = string.includes(substring);
 
-    const data = [
-    {
-        "imageSrc": "Person1",
-        "name": "Zack",
-        "email": "zack@gmail.com",
-        "phone": "123-123-1234",
-        "skills": "electrician",
-        "dueDate": "2023/08/20"
-    },
-    {
-        "imageSrc": "Person1",
-        "name": "Jack",
-        "email": "jack@gmail.com",
-        "phone": "123-123-1233",
-        "skills": "plumbing",
-        "dueDate": "2023/08/22"
-    }
-    ]
-      // console.log(keys);
-      console.log(data);   
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const user = auth.currentUser;
+            if (user) {
+              
+              const userId = user.uid;
+              const dbRef = ref(database, `bookings`); 
+              const snapshot = await get(dbRef); 
+              const fetchedData = snapshot.val();
+    
+              if (fetchedData) {
+                // Convert the fetched data to an array
+                const dataArray = Object.keys(fetchedData).map((key) => ({
+                  ...fetchedData[key],
+                  key: key,
+                }))
+                .filter((item) => {
+                  return item.customerId.includes(userId);
+              })
+              console.log("dataArray", dataArray);
+              setServices(dataArray);
+              }
+            }
+          } catch (error) {
+            console.error("Error fetching data:", error);
+          }
+
+        };
+        fetchData();
+      }, [showServices]);
+
        return (
         <div className='table-layout'>
-            {data.length > 0 ? (
+            {services.length > 0 ? (
                 <table className="table">
                     <thead>
                         <tr>
@@ -55,7 +73,7 @@ const ServiceListing = () => {
                             
                         </tr>
                     </thead>
-                    <tbody>
+                    {/* <tbody>
                         {data.map((x, index) => (
                             <tr key={index}>
                                 {keys.map((key) => (
@@ -68,7 +86,7 @@ const ServiceListing = () => {
                                         />
                                       </div>
                                     ) : key === 'skills' ? (
-                                      x[key] ? x[key] : 'N/A' // Display "N/A" if skills are empty
+                                      x[key] ? x[key] : 'N/A' 
                                     ) : (
                                       x[key]
                                     )}
@@ -85,7 +103,38 @@ const ServiceListing = () => {
                                 
                             </tr>
                         ))}
-                    </tbody>
+                    </tbody> */}
+                     <tbody>
+            {services.map((x) => (
+              <tr key={x.id}>
+                {keys.map((key) => (
+                  <td key={key}>
+                    {key === "imageSrc" ? (
+                      <div className="circle-image">
+                        <img
+                          src={process.env.PUBLIC_URL + "/Images/" + x[key]}
+                          alt={x[key]}
+                        />
+                      </div>
+                    ) : key === "skills" ? (
+                      x[key] ? (
+                        x[key]
+                      ) : (
+                        "N/A"
+                      )
+                    ) : (
+                      x[key]
+                    )}
+                  </td>
+                ))}
+                {showServices && (
+                  <td>
+                    <ReviewPage />
+                  </td>
+                )}
+              </tr>
+            ))}
+          </tbody>
                 </table>
             ) : (
                 <p>No data available</p>

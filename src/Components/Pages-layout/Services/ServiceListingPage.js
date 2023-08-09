@@ -11,7 +11,6 @@ const ServiceListingPage = () => {
     
     let overlayText = `Book your ${serviceType} today!`;
 
-    
     let string = window.location.href;
     let substring = "/customer/past-services";
     console.log(string.includes(substring));
@@ -30,7 +29,7 @@ const ServiceListingPage = () => {
                             <div className='text-overlay'>
                                 {showServices
                                 ?
-                                <span>Services Availed</span>
+                                <span>Services Availed </span>
                                 : 
                                 <span>Upcoming Services</span>
                                 }
