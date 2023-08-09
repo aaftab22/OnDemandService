@@ -1,6 +1,10 @@
+import { NavLink } from 'react-router-dom';
 import Footer from '../Layout/Footer/Footer';
 import Header from '../Layout/Header/Header';
 import './SPDashboard.css';
+import TotalEarnings from './Services/ModalsForSP/TotalEarnings';
+import TotalRatings from './Services/ModalsForSP/TotalRatings';
+import WagesAvailability from './Services/ModalsForSP/WagesAvailability';
 
 const SPDashboard = () => {
     return (
@@ -12,36 +16,33 @@ const SPDashboard = () => {
                     <h2>Welcome to your Dashboard!</h2>                
                     <div className='boxes'>
                         <div className='box box-1'>
-                            <div className='box-title'>
-                                Total Earnings
-                            </div>
-                            <div className='box__count'>
-                                5
-                            </div>
+                                <TotalEarnings />
                         </div>
                         <div className='box box-2'>
-                        <div className='box-title'>
+                        <NavLink className={'second-anchor'} to="/service-provider/upcoming-services">
+                            <div className='box-title'>
                                 Upcoming Services
                             </div>
                             <div className='box__count'>
                                 5
                             </div>
+                        </NavLink>
                         </div>
                         <div className='box box-3'>
-                        <div className='box-title'>
-                                Completed <br /> Services
+                        <NavLink className={'second-anchor'} to="/service-provider/past-services">
+                            <div className='box-title'>
+                                Completed Services
                             </div>
+                            <div className='box__count'>
+                                5
+                            </div>
+                        </NavLink>
                         </div>
                         <div className='box box-4'>
-                        <div className='box-title'>
-                                Ratings
-                            </div>
+                                <TotalRatings />
                         </div>
                         <div className='box box-5'>
-                        <div className='box-title'>
-                                Modify/Enter <br />
-                                Availability
-                            </div>
+                                <WagesAvailability />
                         </div>
                     </div>
                 </div>

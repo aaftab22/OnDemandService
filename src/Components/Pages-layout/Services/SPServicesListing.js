@@ -1,18 +1,13 @@
 import React from 'react';
 import Footer from '../../Layout/Footer/Footer';
 import Header from '../../Layout/Header/Header';
-import './ServiceListingPage.css';
-import { Link, useParams } from 'react-router-dom';
-import ServiceListing from './ServiceListing';
+import './SPServicesListing.css';
+import SPServiceListing from './SPServiceListing';
 
-const ServiceListingPage = () => {
-
-    const { paramName, serviceType } = useParams();
+const SPServicesListing = () => {
     
-    let overlayText = `Book your ${serviceType} today!`;
-
     let string = window.location.href;
-    let substring = "/customer/past-services";
+    let substring = "/service-provider/past-services";
     console.log(string.includes(substring));
     let showServices = string.includes(substring);
     // True - user is on past-services page
@@ -29,7 +24,7 @@ const ServiceListingPage = () => {
                             <div className='text-overlay'>
                                 {showServices
                                 ?
-                                <span>Services Availed </span>
+                                <span>Completed Services</span>
                                 : 
                                 <span>Upcoming Services</span>
                                 }
@@ -44,9 +39,15 @@ const ServiceListingPage = () => {
                         </div>
 
                     <div className='services-listing-page-table'>
-                        <h3>List of available {serviceType}</h3>
-                        
-                        <ServiceListing />
+                        <h3>List of  
+                        {showServices
+                        ?
+                            <span> completed services</span>
+                        :
+                            <span> upcoming services</span>
+                        }
+                        </h3>
+                        <SPServiceListing />
                    
                     </div>
                 </div>
@@ -57,6 +58,6 @@ const ServiceListingPage = () => {
     );
 }
 
-export default ServiceListingPage;
+export default SPServicesListing;
 
 
