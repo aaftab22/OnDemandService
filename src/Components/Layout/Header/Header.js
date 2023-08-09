@@ -5,11 +5,9 @@ const Header = () => {
     console.log(window.location.href);
 
     let string = window.location.href;
-    let substring = "service-provider/dashboard";
-    // console.log(string.includes(substring));
+    let substring = "/service-provider";
+    console.log(string.includes(substring));
     let showServices = string.includes(substring);
-
-    
 
     return (
         <header className="header">
@@ -22,7 +20,13 @@ const Header = () => {
             <nav>
                 <ul className="list">
                     <li>
-                        <NavLink className={({isActive}) => isActive ? 'first-anchor active' : 'first-anchor'} to="/customer/dashboard">Dashboard</NavLink>
+                        {showServices 
+                        ?
+                            <NavLink className={({isActive}) => isActive ? 'first-anchor active' : 'first-anchor'} to="/service-provider/dashboard">Dashboard</NavLink>
+                        :
+                            <NavLink className={({isActive}) => isActive ? 'first-anchor active' : 'first-anchor'} to="/customer/dashboard">Dashboard</NavLink>
+                        }
+                        
                     </li>
                     <li>
                         {!showServices ? (

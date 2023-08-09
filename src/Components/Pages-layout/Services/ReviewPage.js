@@ -13,14 +13,6 @@ function ReviewPage({ serviceProviderId }) {
   const [selectedDay, setSelectedDay] = useState("");
   const [selectedSlot, setSelectedSlot] = useState("");
 
-  const dayChangeHandler = (event) => {
-      setSelectedDay(event.target.value);
-  };
-  
-  const slotChangeHandler = (event) => {
-      setSelectedSlot(event.target.value);
-  };
-
   const submitBookingHandler = async(event) => {
       event.preventDefault();
       try {

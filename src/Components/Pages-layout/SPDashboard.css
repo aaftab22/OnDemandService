@@ -19,6 +19,12 @@
                 font-size: 20px;
                 padding: 15px 15px 0px;
             }
+            
+            & a {
+                text-decoration: none;
+                color: rgb(51, 57, 67);
+            }
+            
             & .box__count {
                 font-size: 28px;
                 font-weight: 600;

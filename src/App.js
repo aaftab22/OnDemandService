@@ -22,6 +22,7 @@ import SPDashboard from './Components/Pages-layout/SPDashboard';
 import ServicesPage from './Components/Pages-layout/Services/ServicesPage';
 import ServiceListingPage from './Components/Pages-layout/Services/ServiceListingPage';
 import AddressesPage from './Components/Pages-layout/Services/Addresses/AddressesPage';
+import SPServicesListing from './Components/Pages-layout/Services/SPServicesListing';
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,8 @@ const router = createBrowserRouter([
       // { path: '/customer/book-service/:serviceType', element: <BookPainter /> },
       // { path: '/customer/book-service/electrician/booking', element: <ServiceBooking /> },
       { path: '/service-provider/dashboard', element: <SPDashboard /> },
+      { path: '/service-provider/past-services', element: <SPServicesListing /> },
+      { path: '/service-provider/upcoming-services', element: <SPServicesListing /> },
     ],
     errorElement: <ErrorPage /> 
   }
