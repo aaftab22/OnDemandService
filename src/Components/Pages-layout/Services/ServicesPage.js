@@ -1,11 +1,11 @@
 import React from 'react';
 import Footer from '../../Layout/Footer/Footer';
 import Header from '../../Layout/Header/Header';
-import './BookElectrician.css';
+import './ServicesPage.css';
 import TableLayout from './TableLayout';
 import { Link, useParams } from 'react-router-dom';
 
-const BookElectrician = () => {
+const ServicesPage = () => {
 
     const { paramName, serviceType } = useParams();
     
@@ -34,7 +34,7 @@ const BookElectrician = () => {
             <Header />
 
             <main className='no-margin'>
-                <div className='book-electrician'> 
+                <div className='services-page'> 
                     <div className='image-box'>
                         <div className='overlay-class'>
                             <div className='text-overlay'>
@@ -44,7 +44,7 @@ const BookElectrician = () => {
                         <img src={process.env.PUBLIC_URL + `/Images/${getImageSrc(serviceType)}`} alt={serviceType} />
                     </div>
 
-                    <div className='electrician-table'>
+                    <div className='services-page-table'>
                         <h3>List of available {serviceType}</h3>
                         
                         <TableLayout serviceList={[]} />
@@ -58,6 +58,6 @@ const BookElectrician = () => {
     );
 }
 
-export default BookElectrician;
+export default ServicesPage;
 
 

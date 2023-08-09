@@ -31,6 +31,10 @@
             &:last-child {
                 margin-right: 0px;
             }
+            & a {
+                color: #333943;
+                text-decoration: none;
+            }
         }
     }
 }

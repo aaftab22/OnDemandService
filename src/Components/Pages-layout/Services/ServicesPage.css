@@ -1,4 +1,4 @@
-.book-electrician {
+.services-page {
 
     & .image-box  {
         width: 100%;
@@ -25,7 +25,7 @@
         }
     }
 
-    & .electrician-table {
+    & .services-page-table {
         text-align: left;
         margin: 20px;
     }

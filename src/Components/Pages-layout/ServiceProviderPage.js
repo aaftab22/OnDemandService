@@ -75,7 +75,6 @@ const onLoginPasswordChangeHandler = (event) => {
 const submitRegisterHandler = async  (event) => {
   event.preventDefault();
 
-
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -112,7 +111,7 @@ const submitRegisterHandler = async  (event) => {
       setEnteredPhone("");
       // setEnteredDob(""); // If you want to empty the date of birth field
 
-      navigate("/customer/dashboard");
+      navigate("/service-provider/dashboard");
       setIsLogin(true);
     } catch (error) {
       const errorCode = error.code;
@@ -131,6 +130,8 @@ const submitLoginHandler = async(event) => {
     navigate('/`service-provider`/dashboard');
     const usersUID = userCredential.user.uid;
     console.log("login user id " + usersUID);
+    
+  navigate("/service-provider/dashboard");
   } 
   catch (error) 
   {

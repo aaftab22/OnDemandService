@@ -57,9 +57,9 @@ const Header = () => {
             <div className='right-side'>
                 {!showServices ? (
                     /* <NavLink className='' to="/customer">Edit Profile</NavLink> */
-                    <NavLink className='' to="/customer">Logout</NavLink>
+                    <NavLink className='' to="/">Logout</NavLink>
                 ) : (
-                    <NavLink className='' to="/service-provider">Logout</NavLink>
+                    <NavLink className='' to="/">Logout</NavLink>
                 )}
             </div>
         </header>

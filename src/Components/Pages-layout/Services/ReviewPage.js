@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import './BookService.css';
+import './ReviewPage.css';
 
 //added
 import { database, ref, push, auth, set } from "../../../firebase";
-function BookService({ serviceProviderId }) {
+function ReviewPage({ serviceProviderId }) {
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -63,7 +63,7 @@ function BookService({ serviceProviderId }) {
   return (
     <>
       <Button variant="success" onClick={handleShow}>
-        Book Service
+        Review Service
       </Button>
 
       <Modal
@@ -73,36 +73,26 @@ function BookService({ serviceProviderId }) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Book your service</Modal.Title>
+          <Modal.Title>Please give your review</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={submitBookingHandler}>
               <div className="booking__controls">
 
+                <p>Your review will be visible to others to know your experience and will help 
+                    the Service Provider to get more services from new clients.</p>
+                    <p><i><b>*Every review will be valued.</b></i></p>
+                    <br /> 
                   <div className="booking__control">
-                      <label>Select Day:</label>
-                      <select required value={selectedDay} name="selectedDay" onChange={dayChangeHandler} >
-                          <option selected disabled>Select suitable day</option>
-                          <option>Monday</option>
-                          <option>Tuesday</option>
-                          <option>Wednesday</option>
-                          <option>Thursday</option>
-                          <option>Friday</option>
-                          <option>Saturday</option>
-                          <option>Sunday</option>
-                      </select>
-                  </div>
-
-                  <br />
-
-                  <div className="booking__control">
-                      <label>Select time slot</label>
-                      <select selected required value={selectedSlot} name="selectedSlot"  onChange={slotChangeHandler} >
-                          <option disabled>Select suitable time slot</option>
-                          <option>Morning (9am - 1pm)</option>
-                          <option>Afternoon (1pm - 5pm)</option>
-                          <option>Evenings (5pm - 9pm)</option>
-                      </select>
+                      <label>Ratings:</label>
+                      <select id="rating" name="rating" required>
+                            <option selected disabled>Select rating as per your Service</option>
+                            <option value="5">★★★★★ (Excellent)</option>
+                            <option value="4">★★★★☆ (Good)</option>
+                            <option value="3">★★★☆☆ (Average)</option>
+                            <option value="2">★★☆☆☆ (Below Average)</option>
+                            <option value="1">★☆☆☆☆ (Poor)</option>
+                        </select>
                   </div>
 
                   <br />
@@ -110,7 +100,7 @@ function BookService({ serviceProviderId }) {
               </div>
               <div className="booking__actions">
                 <button className="btn btn-success" type="submit" onClick={handleBooking}>
-                    Book Service
+                    Submit Ratings
                 </button>
                 <button className="btn btn-danger" variant="primary" type="reset" onClick={onResetHandler}>
                     Cancel
@@ -132,4 +122,4 @@ function BookService({ serviceProviderId }) {
   );
 }
 
-export default BookService;
+export default ReviewPage;

@@ -1,0 +1,25 @@
+.booking__controls {
+
+    & .booking__control {
+
+        & label {
+            width: 150px;
+            font-weight: 500;
+        }
+         & select, & input {
+            width: calc(100% - 150px);
+            height: 30px;
+            padding: 0px 10px;
+         }
+    }
+}
+
+.booking__actions {
+        
+    & button {
+        width: 49%;
+        &:nth-child(1) {
+            margin-right: 2%;
+        }
+    }
+}
