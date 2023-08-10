@@ -12,7 +12,7 @@ const ServiceListing = () => {
     
     const [services, setServices] = useState([]);
     // const keys = data[0] && Object.keys(data[0]);
-    const keys = ["providerName", "selectedDay", "selectedSlot", "skills"];
+    const keys = ["providerName", "selectedDay", "selectedSlot", "skill"];
 
     const titles = ["Name of the Person", "Day", "Time Slot", "Skills"];
 
@@ -73,40 +73,9 @@ const ServiceListing = () => {
                             
                         </tr>
                     </thead>
-                    {/* <tbody>
-                        {data.map((x, index) => (
-                            <tr key={index}>
-                                {keys.map((key) => (
-                                    <td key={key}>
-                                    {key === 'imageSrc' ? (
-                                      <div className='circle-image'>
-                                        <img
-                                          src={process.env.PUBLIC_URL + '/Images/' + x[key]}
-                                          alt={x[key]}
-                                        />
-                                      </div>
-                                    ) : key === 'skills' ? (
-                                      x[key] ? x[key] : 'N/A' 
-                                    ) : (
-                                      x[key]
-                                    )}
-                                  </td>
-                                ))}
-                                {showServices
-                                ?
-                                <td>
-                                    <ReviewPage />
-                                </td>
-                                :
-                                ""
-                                }
-                                
-                            </tr>
-                        ))}
-                    </tbody> */}
-                     <tbody>
+        <tbody>
             {services.map((x) => (
-              <tr key={x.id}>
+              <tr key={x.serviceProviderId}>
                 {keys.map((key) => (
                   <td key={key}>
                     {key === "imageSrc" ? (

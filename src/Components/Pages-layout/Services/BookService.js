@@ -29,9 +29,6 @@ import './BookService.css';
     .then((userData) => {
       if (userData) {
         setUserDetails(userData);
-        
-        // const customerName = userData.fullName;
-        // console.log("customerName", customerName);
 
       } else {
         console.log("User not found or error occurred");
@@ -47,7 +44,7 @@ import './BookService.css';
       .then((userData) => {
         if (userData) {
           setProviderDetails(userData);
-          const providerName = userData.fullName;
+          const providerName = userData.skills;
           console.log("providerName", providerName);
 
         } else {
@@ -81,8 +78,8 @@ import './BookService.css';
               selectedSlot: selectedSlot,
               customerName: userDetails.fullName,
               providerName: providerDetails.fullName,
-              skill: providerDetails.skill,
-              timestamp: Date.now(),  
+              skill: providerDetails.skills,
+              timestamp: Date.now(),    
             };
       
             const bookingRef = ref(database, "bookings");
