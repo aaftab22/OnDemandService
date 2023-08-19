@@ -1,7 +1,6 @@
 import { database } from "../firebase";
 import { get, ref } from "firebase/database"; 
 
-
 export const getUserDetails = async(userId) => {
     try {
       const dbRef = ref(database, `Customer/${userId}`);

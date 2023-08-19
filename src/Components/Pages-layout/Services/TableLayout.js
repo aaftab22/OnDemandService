@@ -9,8 +9,6 @@ import { Link, useParams } from 'react-router-dom';
 const TableLayout = ({serviceList}) => {
     const [data, setData] = useState([]);
     const { paramName, serviceType } = useParams();
-    // console.log( "serviceType2 = " + serviceType);
-    // console.log("serviceList", serviceList);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -43,12 +41,12 @@ const TableLayout = ({serviceList}) => {
         };
     
         fetchData();
-      }, []);
+      }, [serviceType]);
       
       // const keys = data[0] && Object.keys(data[0]);
       const keys = ["fullName", "email", "phone", "skills"];
-      // console.log(keys);
-      // console.log(data);   
+      console.log(keys);
+      console.log(data);   
        return (
         <div className='table-layout'>
             {data.length > 0 ? (

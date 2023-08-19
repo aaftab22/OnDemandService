@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import {  useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import {getUserDetails, getServiceProviderDetails} from '../../../Utills/firebaseDB';
 import Modal from 'react-bootstrap/Modal';
@@ -21,6 +22,8 @@ import './BookService.css';
       fethUserInfo();
       fethProviderInfo();
     },[]);
+
+    const navigate = useNavigate();
 
     const fethUserInfo = () => {
       const user = auth.currentUser;
@@ -88,15 +91,18 @@ import './BookService.css';
 
             console.log("Booking successful!");
             setShow(false); 
+            navigate("/customer/dashboard");
           }
         } catch (error) {
           console.error("Error booking service:", error);
-        }  
+        }
+          
     }
     
     const handleBooking = (x) => {
       setShow(false);
       console.log('val: ', x);
+      
     };
 
     const onResetHandler = () => {

@@ -4,14 +4,13 @@ import './ServiceListing.css';
 import ReviewPage from "./ReviewPage";
 import { get, ref } from "firebase/database"; 
 
-
 //added
 import { auth, database } from "../../../firebase";
 
 const ServiceListing = () => {
     
     const [services, setServices] = useState([]);
-    // const keys = data[0] && Object.keys(data[0]);
+
     const keys = ["providerName", "selectedDay", "selectedSlot", "skill"];
 
     const titles = ["Name of the Person", "Day", "Time Slot", "Skills"];
@@ -21,38 +20,73 @@ const ServiceListing = () => {
     console.log(string.includes(substring));
     const showServices = string.includes(substring);
 
-    useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const user = auth.currentUser;
-            if (user) {
-              
-              const userId = user.uid;
-              const dbRef = ref(database, `bookings`); 
-              const snapshot = await get(dbRef); 
-              const fetchedData = snapshot.val();
+    function formatDate(timestamp) {
+      const date = new Date(timestamp);
+      const day = date.getDate().toString().padStart(2, '0');
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const year = date.getFullYear();
     
-              if (fetchedData) {
-                // Convert the fetched data to an array
-                const dataArray = Object.keys(fetchedData).map((key) => ({
-                  ...fetchedData[key],
-                  key: key,
-                }))
-                .filter((item) => {
-                  return item.customerId.includes(userId);
-              })
-              console.log("dataArray", dataArray);
-              setServices(dataArray);
-              }
+      return `${day}/${month}/${year}`;
+    }
+
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const user = auth.currentUser;
+          if (user) {
+            
+            const userId = user.uid;
+            const dbRef = ref(database, `bookings`); 
+            const snapshot = await get(dbRef); 
+            const fetchedData = snapshot.val();
+
+            function isBookingForToday(bookingDate) {
+              const currentDate = new Date();
+              const formattedCurrentDate = currentDate.toLocaleDateString('en-GB');
+            
+              return formattedCurrentDate === bookingDate;
             }
-          } catch (error) {
-            console.error("Error fetching data:", error);
+            
+            const currentDate = new Date();
+              const formattedCurrentDate = currentDate.toLocaleDateString('en-GB');
+            const bookingDate = formattedCurrentDate; // Replace this with the booking date you have
+            const isToday = isBookingForToday(bookingDate);
+
+            console.log("bookingDate", bookingDate);
+            if (fetchedData) {
+              const dataArray = Object.keys(fetchedData).map((key) => ({
+                ...fetchedData[key],
+                key: key,
+              }))
+              .filter((x) => {
+                if (showServices) {
+                 
+                  // Filter for service availed
+                  console.log("x 123",  x.customerId + "   xx2     "  + userId);
+                  // return x.customerId === userId && formatDate(x.timestamp) < bookingDate;
+                  return  formatDate(x.timestamp) < bookingDate;
+                  
+                } else {
+                  // Filter for upcoming services
+                  console.log("x 123",  x.customerId + "   xx2     "  + userId);
+                  return x.customerId === userId && formatDate(x.timestamp) === bookingDate;
+                  console.log("x", x.timestamp === Date.now());
+                  }                
+              });
+            console.log("dataArray", dataArray);
+            setServices(dataArray);
+            }
           }
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
 
-        };
-        fetchData();
-      }, [showServices]);
+      };
+      fetchData();
+    }, [showServices]);
+        
 
+    
        return (
         <div className='table-layout'>
             {services.length > 0 ? (
@@ -98,7 +132,7 @@ const ServiceListing = () => {
                 ))}
                 {showServices && (
                   <td>
-                    <ReviewPage />
+                    <ReviewPage serviceProviderId={x.serviceProviderId} bookingId={x.key} />
                   </td>
                 )}
               </tr>

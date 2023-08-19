@@ -1,72 +1,85 @@
-import { useEffect, useState } from "react";
-import BookService from './BookService';
-import './SPServiceListing.css';
-import ReviewPage from "./ReviewPage";
+import React, { useEffect, useState } from "react";
+import { get, ref } from "firebase/database"; 
+import { auth, database } from "../../../firebase";
 
 const SPServiceListing = () => {
-      
-    // const keys = data[0] && Object.keys(data[0]);
-    const keys = ["name", "address", "slot", "dueDate"];
+    const [services, setServices] = useState([]);
+    const keys = ["customerName", "selectedDay", "selectedSlot"];
 
-    let titles = ["Name of the Person", "Address", "Timings", "Date"];
+    const titles = ["Name of the Person", "Day", "Slot" ];
 
-    let string = window.location.href;
-    let substring = "/service-provider/past-services";
-    console.log(string.includes(substring));
-    let showServices = string.includes(substring);
+    const string = window.location.href;
+    const substring = "/service-provider/past-services";
+    const showServices = string.includes(substring);
 
-    const data = [
-    {
-        "imageSrc": "Person1",
-        "name": "Zack",
-        "address": "401, 204 Aurburn Drive, Waterloo, Ontario - N2J 4J1",
-        "slot": "Morning (9am - 1pm)",
-        "dueDate": "2023/08/20"
-    },
-    {
-        "imageSrc": "Person1",
-        "name": "Jack",
-        "address": "401, 204 Aurburn Drive, Waterloo, Ontario - N2J 4J1",
-        "slot": "Evening (5pm - 11pm)",
-        "dueDate": "2023/08/22"
-    }
-    ]
-      // console.log(keys);
-      console.log(data);   
-       return (
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const user = auth.currentUser;
+                if (user) {
+                    const userId = user.uid;
+                    const dbRef = ref(database, `bookings`);
+                    const snapshot = await get(dbRef);
+                    const fetchedData = snapshot.val();
+
+                    if (fetchedData) {
+                        const dataArray = Object.keys(fetchedData).map((key) => ({
+                            ...fetchedData[key],
+                            key: key,
+                        }))
+                        .filter((item) => {
+                            return item.serviceProviderId.includes(userId);
+                        });
+                        console.log("dataArray", dataArray);
+                        console.log("uid", userId);
+                        setServices(dataArray);
+                    }
+                }
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+        fetchData();
+    }, []);
+
+    return (
         <div className='table-layout'>
-            {data.length > 0 ? (
+            {services.length > 0 ? (
                 <table className="table">
                     <thead>
                         <tr>
                             {titles.map((title) => (
-                                <th scope="col" title={title}>
+                                <th scope="col" title={title} key={title}>
                                     {title}
                                 </th>
                             ))}
-                            
+                            {/* {showServices ? <th>Action</th> : ""} */}
                         </tr>
                     </thead>
                     <tbody>
-                        {data.map((x, index) => (
-                            <tr key={index}>
+                        {services.map((x) => (
+                            <tr key={x.key}>
                                 {keys.map((key) => (
                                     <td key={key}>
-                                    {key === 'imageSrc' ? (
-                                      <div className='circle-image'>
-                                        <img
-                                          src={process.env.PUBLIC_URL + '/Images/' + x[key]}
-                                          alt={x[key]}
-                                        />
-                                      </div>
-                                    ) : key === 'skills' ? (
-                                      x[key] ? x[key] : 'N/A' // Display "N/A" if skills are empty
-                                    ) : (
-                                      x[key]
-                                    )}
-                                  </td>
+                                        {key === "imageSrc" ? (
+                                            <div className='circle-image'>
+                                                <img
+                                                    src={process.env.PUBLIC_URL + '/Images/' + x[key]}
+                                                    alt={x[key]}
+                                                />
+                                            </div>
+                                        ) : key === 'skills' ? (
+                                            x[key] ? x[key] : 'N/A' 
+                                        ) : (
+                                            x[key]
+                                        )}
+                                    </td>
                                 ))}
-                                
+                                {/* {showServices && (
+                                    <td>
+                                        <ReviewPage />
+                                    </td>
+                                )} */}
                             </tr>
                         ))}
                     </tbody>

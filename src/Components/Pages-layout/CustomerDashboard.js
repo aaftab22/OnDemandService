@@ -15,20 +15,14 @@ const CustomerDashboard = () => {
                         <div className='box box-1'>
                         <NavLink className={'second-anchor'} to="/customer/past-services">                            
                             <div className='box-title'>
-                                Services Availed
-                            </div>
-                            <div className='box__count'>
-                                5
+                                Services <br />Availed
                             </div>
                         </NavLink>
                         </div>
                         <div className='box box-2'>
                         <NavLink className={'second-anchor'} to="/customer/upcoming-services">
                             <div className='box-title'>
-                                Upcoming Services
-                            </div>
-                            <div className='box__count'>
-                                5
+                                Upcoming <br />Services
                             </div>
                         </NavLink>
                         </div>
