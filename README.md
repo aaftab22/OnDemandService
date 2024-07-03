@@ -31,7 +31,7 @@ Ensure you have the following installed on your local machine:
 
 1. Clone the repository:
    ```bash
-    git clone https://github.com/yourusername/ondemand-service.git
+    git clone https://github.com/aaftab22/OnDemandService.git
 
 2. Navigate to the project directory
     cd OnDemandService
